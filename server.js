@@ -1,7 +1,9 @@
+
 const express = require('express');
 const app = express();
+require('dotenv').config();
 setInterval(async() => {
-    const url='https://api.github.com/users/github';
+    const url=process.env.TARGET_URL;
     try {
         const response=await fetch(url);
         if(!response.ok){
@@ -15,9 +17,10 @@ setInterval(async() => {
         
     }
 }, 10000);
+const PORT = process.env.PORT || 8000;
 
-app.listen(8000, () => {
- console.log('Server is running on port 8000');
+app.listen(PORT, () => {
+ console.log(`Server is running on port ${PORT}`);
 });
 
  app.get('/', (req, res) => {
