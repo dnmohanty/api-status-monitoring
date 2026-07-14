@@ -1,31 +1,25 @@
 {
   "compilerOptions": {
-    /* File Layout */
     "rootDir": "./",
     "outDir": "dist",
-
-    /* Environment Settings */
+    
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "target": "esnext",
     "lib": ["esnext", "dom"],
     
-    /* Other Outputs */
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    /* Safe Integration Settings for Migration */
     "allowJs": true,
     "checkJs": false,
 
-    /* Temporarily Relaxed Strictness for Migration */
     "strict": false,
     "noImplicitAny": false,
     "noUncheckedIndexedAccess": false,
     "exactOptionalPropertyTypes": false,
 
-    /* Modern Application Safety Rules */
     "jsx": "react-jsx",
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,

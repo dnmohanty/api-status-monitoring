@@ -1,12 +1,15 @@
 # Autonomous API Monitoring and Alerting Dashboard
 
-An autonomous Node.js service designed to monitor API health, featuring automated error logging, secure environment configuration, and strict type safety.
+An autonomous Node.js service designed to monitor API health, featuring automated error logging, secure environment configuration, strict type safety, and local data persistence.
 
-## Features Built So Far
-*   **Automated Health Checks:** Utilizes `setInterval` and `fetch` to ping target APIs at regular intervals.
-*   **Error Handling:** Implements `try/catch` blocks to gracefully handle network failures and API downtimes without crashing the server.
-*   **Secure Configuration:** Uses `dotenv` to decouple sensitive configuration (like Ports and Target URLs) from the main codebase.
-*   **TypeScript Architecture:** Upgraded from standard JavaScript to strictly-typed TypeScript, utilizing modern ES6 modules (`import/export`) and explicit type definitions for Express.
+## Core Features
+
+*   **Data Persistence & REST API:** Engineered a local data persistence layer using the native Node.js File System (`fs/promises`) to log API health history, and transformed the background monitor into a consumable `/api/history` REST endpoint.
+*   **Automated Health Checks:** Utilizes `setInterval` and `fetch` to autonomously ping target APIs at regular intervals.
+*   **Asynchronous I/O & Path Resolution:** Performs non-blocking file operations to ensure high responsiveness. Implements absolute pathing using `fileURLToPath` and `import.meta.url` for cross-platform compatibility.
+*   **Advanced Error Handling:** Implements precise `try/catch` blocks and specific error code checking (e.g., handling `ENOENT` for uninitialized files) to gracefully manage network and file system failures without crashing the server.
+*   **Secure Configuration:** Uses `dotenv` to decouple sensitive configurations (like Ports and Target URLs) from the main codebase.
+*   **TypeScript Architecture:** Built with strictly-typed TypeScript, utilizing modern ES6 modules (`import/export`) and explicit type definitions for Express.
 
 ## Tech Stack
 *   TypeScript (Node.js)
