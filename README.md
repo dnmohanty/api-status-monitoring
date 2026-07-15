@@ -1,33 +1,66 @@
-# Autonomous API Monitoring & Alerting Dashboard
+# Autonomous API Monitoring Dashboard
 
-A fully autonomous, full-stack monitoring system that tracks API health in real-time and provides an enterprise-grade visual dashboard for alerting.
+A full-stack monitoring system that autonomously pings a target API, logs the uptime and response data into a cloud database, and visualizes the system's health in real-time. 
 
-**Live Demo Frontend (Vercel):** [View Dashboard Here](https://api-status-monitoring-h7b0qx9ib-sentinels3.vercel.app/)  
-**Live API Backend (Render):** [https://api-status-monitoring.onrender.com](https://api-status-monitoring.onrender.com)
+## 🚀 Live Demo
+* **Frontend:** [https://api-status-monitoring.vercel.app](https://api-status-monitoring.vercel.app)
+* **Backend API:** [https://api-status-monitoring.onrender.com/api/history](https://api-status-monitoring.onrender.com/api/history)
 
-## Features
-* **Autonomous Backend Engine**: Node.js microservice that periodically polls target APIs to assess health and latency.
-* **Cloud Data Persistence**: Seamlessly logs API status history and connection metrics to a MongoDB Atlas cluster.
-* **Real-time Dashboard**: React-based frontend built with Vite & TypeScript for instant, autonomous status visualization.
-* **Smart Alerting & Polling**: The frontend engine automatically fetches updates every 10 seconds without page refreshes, triggering visual alerts for service disruptions.
-* **Fully Deployed Workflow**: Continuous Integration/Continuous Deployment (CI/CD) pipelines set up via Vercel (Frontend) and Render (Backend).
+## ✨ Features
+* **Autonomous Polling:** A Node.js backend engine automatically pings a target endpoint (e.g., GitHub API) at 10-second intervals.
+* **Persistent Cloud Logging:** Integrates with MongoDB Atlas to store timestamped successful payloads and error logs.
+* **Real-Time Health UI:** React frontend fetches and displays the most recent 100 database logs, complete with a dynamic status badge ("System Healthy" vs. "Backend Disconnected").
+* **Fully Cloud Deployed:** Microservice architecture deployed across Render (backend) and Vercel (frontend).
 
-## Tech Stack
-* **Frontend**: React, TypeScript, Vite, Vercel
-* **Backend**: Node.js, Express, Render
-* **Database**: MongoDB Atlas
-* **Styling**: Custom CSS with pulse-animation status indicators
+## 🛠 Tech Stack
+**Frontend:**
+* React (Vite)
+* TypeScript
+* CSS
 
-## Setup Instructions
+**Backend & Database:**
+* Node.js / Express.js
+* TypeScript
+* MongoDB Driver 
+* MongoDB Atlas (Cloud Database)
+
+**Infrastructure:**
+* Vercel (Frontend Hosting)
+* Render (Backend Hosting)
+
+## 💻 Local Development
 
 ### Prerequisites
-* Node.js installed (v18+)
-* npm or yarn
-* A MongoDB Atlas account and connection URI
+* Node.js installed
+* A MongoDB Atlas cluster and connection string
 
-### Local Development
+### 1. Clone the repository
+\`\`\`bash
+git clone https://github.com/dnmohanty/api-status-monitoring.git
+cd api-status-monitoring
+\`\`\`
 
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-url>
-   cd autonomous-api-monitor
+### 2. Set up Environment Variables
+Create a `.env` file in the root of your backend directory and add the following keys:
+\`\`\`env
+PORT=8000
+TARGET_URL=https://api.github.com/users/github
+MONGO_URI=your_mongodb_connection_string
+\`\`\`
+
+### 3. Install Dependencies & Run
+Start both the backend and frontend servers:
+
+**Backend:**
+\`\`\`bash
+cd backend
+npm install
+npm run dev
+\`\`\`
+
+**Frontend:**
+\`\`\`bash
+cd frontend
+npm install
+npm run dev
+\`\`\`
