@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
 import 'dotenv/config';
+import cors from 'cors';
 import { appendFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const app = express();
+app.use(cors());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
