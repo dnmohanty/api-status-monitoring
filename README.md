@@ -1,26 +1,27 @@
-# Autonomous API Monitoring and Alerting Dashboard
+# Autonomous API Monitoring & Alerting Dashboard
 
-An autonomous Node.js service designed to monitor API health, featuring automated error logging, secure environment configuration, strict type safety, and local data persistence.
+A fully autonomous, full-stack monitoring system that tracks API health in real-time and provides an enterprise-grade visual dashboard for alerting.
 
-## Core Features
+## Features
+* **Autonomous Backend**: Node.js engine that periodically pings target APIs and manages local data persistence.
+* **Real-time Dashboard**: React-based frontend built with Vite & TypeScript for instant status visualization.
+* **Smart Alerting**: Automatically detects backend service failures and triggers visual alerts in the UI.
+* **Auto-Polling**: Front-end engine updates the dashboard every 10 seconds without page refreshes.
 
-*   **Data Persistence & REST API:** Engineered a local data persistence layer using the native Node.js File System (`fs/promises`) to log API health history, and transformed the background monitor into a consumable `/api/history` REST endpoint.
-*   **Automated Health Checks:** Utilizes `setInterval` and `fetch` to autonomously ping target APIs at regular intervals.
-*   **Asynchronous I/O & Path Resolution:** Performs non-blocking file operations to ensure high responsiveness. Implements absolute pathing using `fileURLToPath` and `import.meta.url` for cross-platform compatibility.
-*   **Advanced Error Handling:** Implements precise `try/catch` blocks and specific error code checking (e.g., handling `ENOENT` for uninitialized files) to gracefully manage network and file system failures without crashing the server.
-*   **Secure Configuration:** Uses `dotenv` to decouple sensitive configurations (like Ports and Target URLs) from the main codebase.
-*   **TypeScript Architecture:** Built with strictly-typed TypeScript, utilizing modern ES6 modules (`import/export`) and explicit type definitions for Express.
+## Architecture
+* **Frontend**: React + TypeScript + Vite.
+* **Backend**: Node.js + Express.
+* **Communication**: REST API with CORS enabled for cross-origin security.
+* **Styling**: Custom CSS with pulse-animation status indicators.
 
-## Tech Stack
-*   TypeScript (Node.js)
-*   Express.js
-*   Dotenv
-*   ts-node
+## Setup Instructions
 
-## How to Run Locally
-1. Clone this repository.
-2. Run `npm install` to install dependencies.
-3. Create a `.env` file in the root directory and add your variables:
-    * `PORT=8000`
-    * `TARGET_URL=https://api.github.com/users/github`
-4. Run `npm run dev` to start the local development server.
+### Prerequisites
+* Node.js installed (v18+)
+* npm or yarn
+
+### Local Development
+1. **Clone the repository**:
+   ```bash
+   git clone <your-repo-url>
+   cd autonomous-api-monitor
