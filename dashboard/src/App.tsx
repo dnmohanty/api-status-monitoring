@@ -13,14 +13,9 @@ function App() {
   const fetchLogs = async () => {
     try {
       const response = await fetch('https://api-status-monitoring.onrender.com/api/history');
-      
-      if (!response.ok) {
-        throw new Error('Backend is down');
-      }
-
+      if (!response.ok) throw new Error('Backend is down');
       const parsedLogs = await response.json();
-      
-      setLogs(Array.isArray(parsedLogs) ? parsedLogs.reverse() : []);
+      setLogs(Array.isArray(parsedLogs) ? parsedLogs : []);
       setBackendError(false); 
     } catch (error) {
       setBackendError(true);
@@ -37,7 +32,6 @@ function App() {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <h1>Autonomous API Dashboard</h1>
-        
         <div className={`status-badge ${backendError ? 'status-error' : 'status-healthy'}`}>
           <div className="status-dot"></div>
           {backendError ? 'Backend Disconnected' : 'System Healthy'}
@@ -50,7 +44,6 @@ function App() {
           <span>Timestamp</span>
           <span>Target Identity</span>
         </div>
-        
         {logs.map((log, index) => (
           <div key={index} className="grid-row">
             <span className="success-text">200 OK</span>
@@ -58,7 +51,6 @@ function App() {
             <span className="code-font">{log.data?.username || log.data?.login || 'Unknown'} (ID: {log.data?.id || 'N/A'})</span>
           </div>
         ))}
-        
         {logs.length === 0 && !backendError && (
           <div className="empty-state">Waiting for autonomous pings...</div>
         )}

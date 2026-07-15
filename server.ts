@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { type Request, type Response } from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { MongoClient } from 'mongodb';
@@ -15,8 +15,10 @@ let dbInitialized = false;
 async function initDb() {
   try {
     await client.connect();
+    console.log('Database connected');
     dbInitialized = true;
   } catch (error) {
+    console.error(error);
     dbInitialized = false;
   }
 }
@@ -45,7 +47,9 @@ async function checkTargetUrl(): Promise<void> {
         timestamp: new Date().toISOString(),
         error: errorMessage
       });
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 
@@ -71,6 +75,7 @@ app.get('/api/history', async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json(formattedLogs);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
