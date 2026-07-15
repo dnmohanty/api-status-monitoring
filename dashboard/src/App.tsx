@@ -18,21 +18,9 @@ function App() {
         throw new Error('Backend is down');
       }
 
-      const text = await response.text();
+      const parsedLogs = await response.json();
       
-      if (!text) {
-        setLogs([]);
-        setBackendError(false);
-        return;
-      }
-      
-      const parsedLogs = text
-        .split('\n')
-        .filter((line) => line.trim() !== '')
-        .map((line) => JSON.parse(line))
-        .reverse();
-
-      setLogs(parsedLogs);
+      setLogs(Array.isArray(parsedLogs) ? parsedLogs.reverse() : []);
       setBackendError(false); 
     } catch (error) {
       setBackendError(true);

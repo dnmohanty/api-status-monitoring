@@ -53,7 +53,7 @@ setInterval(checkTargetUrl, 10000);
 
 app.get('/api/history', async (req: Request, res: Response): Promise<void> => {
   if (!dbInitialized) {
-    res.status(500).send('Database not connected');
+    res.status(500).json({ error: 'Database not connected' });
     return;
   }
   try {
@@ -64,14 +64,14 @@ app.get('/api/history', async (req: Request, res: Response): Promise<void> => {
       .limit(100)
       .toArray();
     
-    const stringifiedLogs = logs
-      .reverse()
-      .map(log => JSON.stringify({ timestamp: log.timestamp, data: log.data }))
-      .join('\n');
+    const formattedLogs = logs.reverse().map(log => ({
+      timestamp: log.timestamp,
+      data: log.data
+    }));
 
-    res.type('text/plain').send(stringifiedLogs);
+    res.status(200).json(formattedLogs);
   } catch (error) {
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
