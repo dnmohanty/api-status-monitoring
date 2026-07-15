@@ -15,8 +15,7 @@ const SUCCESS_LOG_PATH = path.join(__dirname, 'success.log');
 const ERROR_LOG_PATH = path.join(__dirname, 'error.log');
 
 async function checkTargetUrl(): Promise<void> {
-  const url = process.env.TARGET_URL;
-  if (!url) return; 
+  const url = process.env.TARGET_URL || 'https://jsonplaceholder.typicode.com/users/1';
 
   try {
     const response = await fetch(url);
@@ -25,21 +24,15 @@ async function checkTargetUrl(): Promise<void> {
     }
 
     const data: unknown = await response.json(); 
-    console.log('success:', data);
-
     const logEntry = JSON.stringify({ timestamp: new Date().toISOString(), data }) + '\n';
     await appendFile(SUCCESS_LOG_PATH, logEntry, 'utf8');
 
   } catch (error) {
-    console.error('Error:', error);
-
     try {
       const errorMessage = error instanceof Error ? error.message : String(error);
       const errorEntry = `[${new Date().toISOString()}] Error: ${errorMessage}\n`;
       await appendFile(ERROR_LOG_PATH, errorEntry, 'utf8');
-    } catch (fsError) {
-      console.error('Fatal: Failed to write to error log file:', fsError);
-    }
+    } catch (fsError) {}
   }
 }
 
@@ -53,9 +46,8 @@ app.get('/api/history', async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     const err = error as NodeJS.ErrnoException;
     if (err.code === 'ENOENT') {
-      res.status(200).send('No logs available yet.');
+      res.status(200).send('');
     } else {
-      console.error('Error reading log file:', error);
       res.status(500).send('Internal Server Error');
     }
   }
@@ -67,6 +59,4 @@ app.get('/', (req: Request, res: Response): void => {
 
 const PORT: number | string = process.env.PORT || 8000;
 
-app.listen(PORT as number, "0.0.0.0", () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(PORT as number, "0.0.0.0", () => {});

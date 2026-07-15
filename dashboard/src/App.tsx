@@ -3,11 +3,7 @@ import './App.css';
 
 interface LogEntry {
   timestamp: string;
-  data: {
-    login?: string;
-    id?: number;
-    [key: string]: any; 
-  };
+  data: any;
 }
 
 function App() {
@@ -16,13 +12,19 @@ function App() {
 
   const fetchLogs = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/history');
+      const response = await fetch('https://api-status-monitoring.onrender.com/api/history');
       
       if (!response.ok) {
         throw new Error('Backend is down');
       }
 
       const text = await response.text();
+      
+      if (!text) {
+        setLogs([]);
+        setBackendError(false);
+        return;
+      }
       
       const parsedLogs = text
         .split('\n')
@@ -33,16 +35,13 @@ function App() {
       setLogs(parsedLogs);
       setBackendError(false); 
     } catch (error) {
-      console.error('Failed to fetch logs:', error);
       setBackendError(true);
     }
   };
 
   useEffect(() => {
     fetchLogs(); 
-    
     const intervalId = setInterval(fetchLogs, 10000);
-    
     return () => clearInterval(intervalId);
   }, []);
 
@@ -68,7 +67,7 @@ function App() {
           <div key={index} className="grid-row">
             <span className="success-text">200 OK</span>
             <span>{new Date(log.timestamp).toLocaleString()}</span>
-            <span className="code-font">{log.data.login || 'Unknown'} (ID: {log.data.id || 'N/A'})</span>
+            <span className="code-font">{log.data?.username || log.data?.login || 'Unknown'} (ID: {log.data?.id || 'N/A'})</span>
           </div>
         ))}
         
